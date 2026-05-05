@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block container %}
+<main>
+    <section id="catLeft">
+        {% for cat in categories %}
+            <p class="notSelectedCategory">
+                <a href="{{ url_for('category', categoryId=cat['categoryId']) }}">
+                    {{ cat['categoryName'] }}
+                </a>
+            </p>
+        {% endfor %}
+    </section>
+    <section id="catRight" style="display:flex; justify-content:center;">
+        <div class="book" style="width:650px; padding:20px; display:flex;">
+            <div>
+                <img src="{{ url_for('static', filename='images/books/' + book['image']) }}"
+                     alt="{{ book['title'] }}" style="width:250px;">
+            </div>
+            <div class="bookDetailBox" style="margin-left:30px; font-size:1em;">
+                <h1 style="margin-bottom:10px;">{{ book['title'] }}</h1>
+                <p class="bookDetail"><strong>by {{ book['author'] }}</strong></p>
+                <p class="bookDetail">ISBN: {{ book['isbn'] }}</p>
+                <p class="bookDetail">Category: {{ book['categoryName'] }}</p>
+                <p class="bookPrice" style="margin-top:15px;">
+                    ${{ '%.2f'|format(book['price']) }}
+                </p>
+                <a class="actionButton" href="#">Add to cart</a>
+                {% if book['readNow'] == 1 %}
+                    <a class="actionButton" href="#">Read Now</a>
+                {% endif %}
+                <br>
+                <a href="{{ url_for('category', categoryId=book['categoryId']) }}"
+                   class="actionButton"
+                   style="width:auto; padding:0 10px; background-color:#00aacc; margin-top:20px;">
+                    Back to Category
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

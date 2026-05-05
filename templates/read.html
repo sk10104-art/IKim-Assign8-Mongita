@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block container %}
+<main style="display:block; padding:30px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h1>Manage Books</h1>
+        <a href="{{ url_for('create') }}" class="commandButton" style="margin:0;">+ Add New Book</a>
+    </div>
+
+    <table style="width:100%; border-collapse:collapse; background-color:white;">
+        <thead>
+            <tr style="background-color:#dd1d5e; color:white;">
+                <th style="padding:10px; text-align:left;">Image</th>
+                <th style="padding:10px; text-align:left;">Title</th>
+                <th style="padding:10px; text-align:left;">Author</th>
+                <th style="padding:10px; text-align:left;">ISBN</th>
+                <th style="padding:10px; text-align:left;">Category</th>
+                <th style="padding:10px; text-align:left;">Price</th>
+                <th style="padding:10px; text-align:left;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:10px;">
+                    <img src="{{ url_for('static', filename='images/books/' + book['image']) }}"
+                         alt="{{ book['title'] }}" style="width:60px;">
+                </td>
+                <td style="padding:10px;">{{ book['title'] }}</td>
+                <td style="padding:10px;">{{ book['author'] }}</td>
+                <td style="padding:10px;">{{ book['isbn'] }}</td>
+                <td style="padding:10px;">{{ book['categoryName'] }}</td>
+                <td style="padding:10px;">${{ '%.2f'|format(book['price']) }}</td>
+                <td style="padding:10px;">
+                    <a href="{{ url_for('edit', book_id=book['bookId']) }}"
+                       class="actionButton" style="display:inline-block; margin-right:5px;">Edit</a>
+                    <a href="{{ url_for('delete', book_id=book['bookId']) }}"
+                       class="actionButton"
+                       style="display:inline-block; background-color:#888;"
+                       onclick="return confirm('Delete this book?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if books|length == 0 %}
+        <p style="margin-top:20px;">No books in the database. <a href="{{ url_for('create') }}">Add one</a>.</p>
+    {% endif %}
+</main>
+{% endblock %}

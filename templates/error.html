@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block container %}
+<main style="display:block; padding:40px;">
+    <h1 id="notFoundMessage">Something went wrong</h1>
+    <p>{{ error }}</p>
+    <a href="{{ url_for('home') }}" class="commandButton">Back to Home</a>
+</main>
+{% endblock %}

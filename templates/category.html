@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block container %}
+<main>
+    <section id="catLeft">
+        {% for cat in categories %}
+            {% if selectedCategory and selectedCategory['categoryId'] == cat['categoryId'] %}
+                <p class="selectedCategory">{{ cat['categoryName'] }}</p>
+            {% else %}
+                <p class="notSelectedCategory">
+                    <a href="{{ url_for('category', categoryId=cat['categoryId']) }}">
+                        {{ cat['categoryName'] }}
+                    </a>
+                </p>
+            {% endif %}
+        {% endfor %}
+    </section>
+    <section id="catRight">
+        {% if searchTerm %}
+            <p style="margin:20px;">Search results for "{{ searchTerm }}"</p>
+        {% endif %}
+        {% if nothingFound %}
+            <p style="color:#dd1d5e; font-weight:bold; margin:20px; font-size:1.2em;">
+                No results found for "{{ searchTerm }}"
+            </p>
+        {% endif %}
+        {% for book in books %}
+            <div class="book">
+                <div>
+                    <a href="{{ url_for('book_detail', bookId=book['bookId']) }}">
+                        <img src="{{ url_for('static', filename='images/books/' + book['image']) }}"
+                             alt="{{ book['title'] }}">
+                    </a>
+                </div>
+                <div class="bookDetailBox">
+                    <p class="bookTitle">
+                        <a href="{{ url_for('book_detail', bookId=book['bookId']) }}">
+                            {{ book['title'] }}
+                        </a>
+                    </p>
+                    <p class="bookDetail">by {{ book['author'] }}</p>
+                    <p class="bookDetail">ISBN: {{ book['isbn'] }}</p>
+                    <p class="bookPrice">${{ '%.2f'|format(book['price']) }}</p>
+                    <a class="actionButton" href="#">Add to cart</a>
+                    {% if book['readNow'] == 1 %}
+                        <a class="actionButton" href="#">Read Now</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}
