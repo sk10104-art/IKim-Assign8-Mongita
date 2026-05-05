@@ -1,0 +1,18 @@
+[
+  {
+    "categoryId": 1,
+    "categoryName": "Biographies"
+  },
+  {
+    "categoryId": 2,
+    "categoryName": "Learn to Play"
+  },
+  {
+    "categoryId": 3,
+    "categoryName": "Music Theory"
+  },
+  {
+    "categoryId": 4,
+    "categoryName": "Scores and Charts"
+  }
+]
